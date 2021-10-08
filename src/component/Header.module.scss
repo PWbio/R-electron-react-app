@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  background-color: #000;
+  min-width: 40rem;
+}
+
+.appName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 2rem;
+  color: #fff;
+}
