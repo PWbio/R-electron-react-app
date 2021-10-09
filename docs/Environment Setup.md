@@ -1,5 +1,3 @@
-# Environment Setup
-
 # Initialize react app
 
 ---
@@ -12,7 +10,7 @@ cd project
 npx create-react-app r-electron-react-app
 ```
 
-Note: use `npx` will first check if `create-react-app` (a npm package) is installed in your local machine. If not, it will download the latest version, execute `create-react-app` and delete the packages.  
+Note: use `npx` will first check if `create-react-app` (a npm package) is installed in your local machine. If not, it will download the latest version, execute `create-react-app` and delete the packages.
 
 # Install dependencies
 
@@ -27,57 +25,54 @@ yarn add electron-is-dev
 ```
 
 - `concurrently`: execute multiple command at the same time.
-    
-    ```bash
-    "start": "concurrently \"command1 arg\" \"command2 arg\""
-    ```
-    
+  ```bash
+  "start": "concurrently \"command1 arg\" \"command2 arg\""
+  ```
 - `wait-on`: wait for a port to be opened.
 - `cross-env`: painless way to set environment variable across OS platform.
-    
-    To prevent opening a browser, add `BROWSER=none` to environment variable. The variable can be read by `process.env.BROWSER` in node.
-    
-    ```json
-    // This may work in mac and linux but not in window
-    "start": "BROWSER=none react-scripts start" 
-    
-    // The standard method in mac and linux
-    "start": "export BROWSER=none && react-scripts start" 
-    
-    // The standard method in window (CMD, not tested)
-    // Note: no spacing before &&
-    "start": "set BROWSER=none&& react-scripts start"
-    
-    // The standard method in window (Powershell, not tested)
-    "start": "$env:BROWSER="none"; react-scripts start"
-    
-    // Using cross-env
-    // Do not add && after environment variable
-    "start": "cross-env BROWSER=none react-scripts start" // work
-    "start": "cross-env BROWSER=none && react-scripts start" // not work
-    ```
-    
-    Another way to pass environment variables is to create a `.env` file under your project folder.
-    
-    ```json
-    .
-    ├── README.md
-    ├── electron
-    ├── node_modules
-    ├── package.json
-    ├── public
-    ├── src
-    ├── yarn.lock
-    └── .env // create file here
-    ```
-    
-    And, add `BROWSER=none` in the file.
-    
-    ```json
-    // .env
-    BROWSER=none
-    ```
-    
+  To prevent opening a browser, add `BROWSER=none` to environment variable. The variable can be read by `process.env.BROWSER` in node.
+
+  ```json
+  // This may work in mac and linux but not in window
+  "start": "BROWSER=none react-scripts start"
+
+  // The standard method in mac and linux
+  "start": "export BROWSER=none && react-scripts start"
+
+  // The standard method in window (CMD, not tested)
+  // Note: no spacing before &&
+  "start": "set BROWSER=none&& react-scripts start"
+
+  // The standard method in window (Powershell, not tested)
+  "start": "$env:BROWSER="none"; react-scripts start"
+
+  // Using cross-env
+  // Do not add && after environment variable
+  "start": "cross-env BROWSER=none react-scripts start" // work
+  "start": "cross-env BROWSER=none && react-scripts start" // not work
+  ```
+
+  Another way to pass environment variables is to create a `.env` file under your project folder.
+
+  ```json
+  .
+  ├── README.md
+  ├── electron
+  ├── node_modules
+  ├── package.json
+  ├── public
+  ├── src
+  ├── yarn.lock
+  └── .env // create file here
+  ```
+
+  And, add `BROWSER=none` in the file.
+
+  ```json
+  // .env
+  BROWSER=none
+  ```
+
 - `electron-is-dev`: Check if Electron is running in development
 - `electron-builder`: Build an installer and executable app.
 - `sass`: A pre-processor that converts SCSS code to standard CSS.
@@ -123,14 +118,15 @@ Use `npm run <stage>` to [execute the command](https://docs.npmjs.com/cli/v7/com
 ```
 
 - Add `dev` stage: we use concurrently to execute two subprocesses at the same time.
-    1. `cross-env BROWSER=none yarn start`
-        
-        We first add a `BROWSER=none` environment variable and start the react app with `yarn start`.
-        
-    2. `wait-on tcp:3000 && electron .`
-        
-        Since our source files have not yet been compiled, we don't have any front-end page ready to be displayed in the electron app. Therefore, we need to wait for the webpack dev server to be ready and compiled the code in runtime. That's why we need to listening to the port 3000 (default port) before start an electron app.
-        
+
+  1. `cross-env BROWSER=none yarn start`
+
+     We first add a `BROWSER=none` environment variable and start the react app with `yarn start`.
+
+  2. `wait-on tcp:3000 && electron .`
+
+     Since our source files have not yet been compiled, we don't have any front-end page ready to be displayed in the electron app. Therefore, we need to wait for the webpack dev server to be ready and compiled the code in runtime. That's why we need to listening to the port 3000 (default port) before start an electron app.
+
 - Add `build` stage: Compile the react scripts and then run the `electron-builder` to create an installer according to your OS. [More information](https://www.electron.build/multi-platform-build).
 
 ### Fields required for electron-builder
@@ -143,13 +139,13 @@ Use `npm run <stage>` to [execute the command](https://docs.npmjs.com/cli/v7/com
       "category": "public.app-category.developer-tools"
     },
     "files": [
-      "build/**/*", // build react folder
-      "electron/**/*" // electron folder, including entry file.
+      "build/**/*",
+      "electron/**/*"
     ]
   }
 ```
 
-- `build.files`: Control which files should include in your electron app. `node_modules` and `package.json` are included by default (development dependencies are never copied).
+- `build.files`: Control which files should include in your electron app. `node_modules` and `package.json` are included by default (development dependencies are never copied). `build/**/*` for React compiled folder. `electron/**/*` for electron app folder.
 - [Detail information](https://www.electron.build/configuration/configuration#MetadataDirectories-buildResources) for each property using in `electron-builder`. More logic about file selection can be found [here](https://www.electron.build/configuration/contents#files).
 
 ### Complete package.json
@@ -187,23 +183,13 @@ Use `npm run <stage>` to [execute the command](https://docs.npmjs.com/cli/v7/com
     "mac": {
       "category": "public.app-category.developer-tools"
     },
-    "files": [
-      "build/**/*",
-      "electron/**/*"
-    ]
+    "files": ["build/**/*", "electron/**/*"]
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",

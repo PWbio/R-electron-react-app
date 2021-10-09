@@ -36,6 +36,7 @@
 - The `nodeIntegration` feature enable front-end code (renderer process) to directly access main process module. Functions in these modules have ability to create new process, control native APIs, and permission to access file system, which posing a severe security risk. So, the default setting is turn off since Electron version 5.
 - `preload.js` is executed in a **renderer process** and called before all other renderer scripts are loaded in the website. It has full access to Node APIs and the environment of renderer process.
 - The global `window` object can be shared between preload script and the renderer process. For security reason, `Context Isolation` should also be **turned on** to prevent sharing the global `window` object (default setting). Using `contextBridge` module to share the variables is a safer way.
+
   ```jsx
   // preload.js
   // attach a privileged API to window object
@@ -48,6 +49,7 @@
   // -- contextIsolation enabled --
   window.myAPI; // return undefined (safe)
   ```
+
 - `Sandbox` completely isolates the **renderer processes.** It prohibited renderer from accessing most system resources. To perform privileged tasks, electron use IPC to delegate these operation to main processes with higher permission.
 - When `Sandbox` is on, preload scripts can only require [limited node modules](https://www.electronjs.org/docs/latest/tutorial/sandbox#preload-scripts), because it is running in the renderer process.
 
@@ -66,5 +68,3 @@
 - Security
 
 [https://www.electronjs.org/docs/tutorial/security](https://www.electronjs.org/docs/tutorial/security#4-enable-sandboxing)
-
-![Untitled](Something%20about%20Electron%20e77104b03d39480395bd9e640eb125a7/Untitled%201.png)
