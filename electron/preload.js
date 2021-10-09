@@ -8,4 +8,5 @@ const getSysVersion = () => {
 
 contextBridge.exposeInMainWorld("preloadAPI", {
   sysVer: getSysVersion(),
+  port: process.env.SERVER_PORT,
 });
