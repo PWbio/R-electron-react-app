@@ -1,7 +1,5 @@
 # Initialize react app
 
----
-
 ```bash
 # navigate to where you want to setup the app
 cd project
@@ -13,8 +11,6 @@ npx create-react-app r-electron-react-app
 Note: use `npx` will first check if `create-react-app` (a npm package) is installed in your local machine. If not, it will download the latest version, execute `create-react-app` and delete the packages.
 
 # Install dependencies
-
----
 
 ```bash
 # devDependencies
@@ -78,8 +74,6 @@ yarn add electron-is-dev
 - `sass`: A pre-processor that converts SCSS code to standard CSS.
 
 # Package.json
-
----
 
 ### Basic app information
 

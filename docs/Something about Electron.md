@@ -5,8 +5,6 @@
 
 # How it works?
 
----
-
 - Electron app is controlled by two major processes, called **Main** and **Renderer**.
 - Main process maintain the overall functionality of the app. Electron provides several modules to perform following tasks:
   - Interact with native APIs, e.g., notification, system menu, tray icons, etc.
@@ -18,20 +16,14 @@
 
 # Backend Service
 
----
-
 - Locally, we can establish a backend service by creating a new subprocess in main process using `child_process` module. The subprocess contains all of the server logic. Later, we should use the websocket connection or HTTP request to exchange the data with the local server.
 - Remotely, we can directly send API requests to the remote service as usual website.
 
 # Crosstalk between processes
 
----
-
 - Electron provides IPC (inter-process communication) channel to exchange message between main process, renderer process, and subprocess.
 
 # Security
-
----
 
 - The `nodeIntegration` feature enable front-end code (renderer process) to directly access main process module. Functions in these modules have ability to create new process, control native APIs, and permission to access file system, which posing a severe security risk. So, the default setting is turn off since Electron version 5.
 - `preload.js` is executed in a **renderer process** and called before all other renderer scripts are loaded in the website. It has full access to Node APIs and the environment of renderer process.
