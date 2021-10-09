@@ -27,3 +27,6 @@ yarn-error.log*
 
 # distribution of electron app
 /dist
+
+# R portable
+/R/R-portable
