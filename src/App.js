@@ -6,8 +6,7 @@ let socket;
 
 const App = () => {
   const [text, setText] = useState("message from server ...");
-
-  useEffect(() => {
+  const newConn = () => {
     // specify port 0 if port is unavailable
     const port =
       window.preloadAPI.port === "undefined" ? "0" : window.preloadAPI.port;
@@ -20,7 +19,9 @@ const App = () => {
       console.log(data);
       setText(data.message);
     };
-  }, []);
+  };
+
+  useEffect(() => newConn(), []);
   return (
     <>
       <Header />
@@ -29,7 +30,7 @@ const App = () => {
           socket.send(JSON.stringify({ action: "uppercase", message: "abc" }));
         }}
       >
-        click
+        send request
       </button>
       <button
         onClick={() => {
@@ -37,6 +38,23 @@ const App = () => {
         }}
       >
         close connection
+      </button>
+      <button
+        onClick={() => {
+          if ([3, 4].includes(socket.readyState)) {
+            newConn();
+            console.log("new connection");
+          }
+        }}
+      >
+        open connection
+      </button>
+      <button
+        onClick={() => {
+          console.log(socket.readyState);
+        }}
+      >
+        socket state
       </button>
       <p>{text}</p>
     </>
