@@ -121,7 +121,7 @@ Use `npm run <stage>` to [execute the command](https://docs.npmjs.com/cli/v7/com
 
      Since our source files have not yet been compiled, we don't have any front-end page ready to be displayed in the electron app. Therefore, we need to wait for the webpack dev server to be ready and compiled the code in runtime. That's why we need to listening to the port 3000 (default port) before start an electron app.
 
-- Add `build` stage: Compile the react scripts and then run the `electron-builder` to create an installer according to your OS. [More information](https://www.electron.build/multi-platform-build).
+- Add `dist` stage: Compile the react scripts and then run the `electron-builder` to create an installer according to your OS. [More information](https://www.electron.build/multi-platform-build).
 
 ### Fields required for electron-builder
 
