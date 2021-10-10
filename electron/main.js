@@ -27,6 +27,7 @@ const createWindow = () => {
  * @function switchPage load HTML page into app's window
  * @param {str} page "loading", "error", or "index"
  */
+let currentPage = "loading";
 const switchPage = (page) => {
   if (page === "loading") {
     // starting page
@@ -42,6 +43,7 @@ const switchPage = (page) => {
         ? path.join(__dirname, "../public/error.html")
         : path.join(__dirname, "../build/error.html")
     );
+    currentPage = "error";
   } else if (page === "index") {
     // Actual page for user interface
     win.loadURL(
@@ -49,6 +51,7 @@ const switchPage = (page) => {
         ? "http://localhost:3000"
         : `file://${path.join(__dirname, "../build/index.html")}`
     );
+    currentPage = "index";
   }
 
   // Open web developer tool window
@@ -101,10 +104,7 @@ const openServer = (port) => {
   // Close Server when closing app
   app.on("will-quit", () => rProc.kill());
 };
-//
-/**
- * @description Listen events on app module
- */
+
 app.whenReady().then(() => {
   // -- Search for free port to open R server --
   // set port 1~1000 to simulate port not found.
@@ -129,7 +129,10 @@ app.whenReady().then(() => {
 // On mac, the app may still run after closing app's window. So, we need to spawn a new window when "clicking the dock icon".
 app.on("activate", function () {
   // Only open new window when no window exist
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+    switchPage(currentPage);
+  }
 });
 
 app.on("window-all-closed", function () {
