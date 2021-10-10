@@ -10,12 +10,14 @@
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.16.13",
     "electron-is-dev": "^2.0.0",
+    "electron-util": "^0.17.2",
     "portfinder": "^1.0.28",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "styled-components": "^5.3.1",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "websocket": "^1.0.34"
   },
   "main": "electron/main.js",
   "homepage": "./",
@@ -25,7 +27,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"cross-env BROWSER=none yarn start\" \"wait-on tcp:3000 && electron .\"",
-    "dist": "electron-builder"
+    "dist": "yarn build && electron-builder",
+    "electron": "electron ."
   },
   "build": {
     "extends": null,
@@ -35,7 +38,11 @@
     },
     "files": [
       "build/**/*",
-      "electron/**/*"
+      "electron/**/*",
+      "R/**/*"
+    ],
+    "asarUnpack": [
+      "R/**/*"
     ]
   },
   "eslintConfig": {

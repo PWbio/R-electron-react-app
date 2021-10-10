@@ -5,7 +5,6 @@ args <- commandArgs(trailingOnly = TRUE) # receive args pass to Rscript command
 # if (args[1] != "undefined") port <- as.integer(args[1])
 port <- as.integer(args[1])
 
-
 #' @description prevent R code to produce extra error and warning messages.
 #' In R, warning messages are belong to stderr.
 safeRun <- function(expr) { # record warnings and error. also prevent program stopping due to error.

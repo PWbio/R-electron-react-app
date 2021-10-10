@@ -1,12 +1,14 @@
 const { contextBridge } = require("electron");
+const varLoading = require("./preload/loading");
+const varIndex = require("./preload/index");
 
-const getSysVersion = () => {
-  let version = {};
-  ["chrome", "node", "electron"].map((v) => (version[v] = process.versions[v]));
-  return version;
-};
+renderHTML = location.href;
+
+let apiContent;
+if (/loading.html$/.test(renderHTML)) apiContent = varLoading;
+else if (/index.html$|localhost:3000/.test(renderHTML)) apiContent = varIndex;
 
 contextBridge.exposeInMainWorld("preloadAPI", {
-  sysVer: getSysVersion(),
+  ...apiContent,
   port: process.env.SERVER_PORT,
 });
